@@ -1,33 +1,45 @@
 package org.lessons.java.geometria;
 
-/**
- * Nel progetto java-oop-geometria creare un package org.lessons.java.geometria in cui inserire le classi:
- * 1. una classe Rettangolo con due attributi interi: base e altezza.
- *      Aggiungere un opportuno costruttore con parametri.
- *      Aggiungere due metodi: calcolaArea e calcolaPerimetro che calcolano e restituiscono, rispettivamente, l’area e il
- *      perimetro del rettangolo.
- * 2. una classe Main contenente il metodo main(), nel quale chiedete all’utente di inserire, da terminale, i valori di
- *      base e di altezza con cui creare un nuovo Rettangolo. Dopo averlo istanziato, stampate a video il perimetro e l’area.
- * BONUS
- * Aggiungere alla classe Rettangolo un metodo “disegna” che disegna in console il rettangolo con le sue dimensioni,
- * come nell’immagine allegata
- */
-
 public class Rectangle {
 
-    double base, height;
+    private double base, height;
+    private double area, perimeter;
 
     public Rectangle(double base, double height) {
         this.base = base >= 0 ? base : 0.0d;
         this.height = height >= 0 ? height : 0.0d;
+        update();
+    }
+
+    private void update() {
+        calculateArea();
+        calculatePerimeter();
+    }
+
+    private void calculateArea() {
+        area = base * height;
+    }
+
+    private void calculatePerimeter() {
+        perimeter = base * 2 + height * 2;
+    }
+
+    public void setBase(double base) {
+        this.base = base >= 0 ? base : 0.0d;
+        update();
+    }
+
+    public void setheight(double height) {
+        this.height = height >= 0 ? height : 0.0d;
+        update();
     }
 
     public double getArea() {
-        return (base * height) / 2;
+        return area;
     }
 
     public double getPerimeter() {
-        return base * 2 + height * 2;
+        return perimeter;
     }
 
     @Override
@@ -35,7 +47,33 @@ public class Rectangle {
         return "Rectangle{" +
                 "base=" + base +
                 ", height=" + height +
+                ", area=" + area +
+                ", perimeter=" + perimeter +
                 '}';
+    }
+
+    public void printOnConsole(String character, String blankSpace) {
+
+        for (int r = 0; r < height; r++) {
+            printEdge(character);
+
+            if (r == 0 || r == height - 1)
+                fillRow(character, (int) (base - 2));
+            else
+                fillRow(blankSpace, (int) (base - 2));
+
+            printEdge(character);
+            System.out.println();
+        }
+    }
+
+    private void fillRow(String str, int times) {
+        for (int i = 0; i < times; i++)
+            System.out.print(str);
+    }
+
+    private void printEdge(String str) {
+        System.out.print(str);
     }
 
 }
